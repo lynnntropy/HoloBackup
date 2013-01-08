@@ -57,31 +57,37 @@ class Window(QtGui.QWidget):
 		popup_msg = "Ready to start the operation. You'll need to monitor the rest of the process on your device. Be careful not to close the main window until it's done!"
 		reply = QtGui.QMessageBox.question(self, 'Ready!',
 			popup_msg, QtGui.QMessageBox.Ok)
+
+	def root_popup(self):
+		popup_msg = "Backups can only be performed when the application is run as superuser/root. Please do that now."
+		reply = QtGui.QMessageBox.question(self, 'Warning!',
+			popup_msg, QtGui.QMessageBox.Ok)
+		exit(0)
 			
 	def backup_all_without_system(self):
 		self.password_popup()
 		self.progress_popup()
-		os.system("adb backup -apk -shared -all -nosystem -f \"" + Path + "\"")
+		os.system("./adb backup -apk -shared -all -nosystem -f \"" + Path + "\"")
 		
 	def backup_all_with_system(self):
 		self.password_popup()
 		self.progress_popup()
-		os.system("adb backup -apk -shared -all -system -f \"" + Path + "\"")
+		os.system("./adb backup -apk -shared -all -system -f \"" + Path + "\"")
 		
 	def backup_app_data_and_device_data(self):
 		self.password_popup()
 		self.progress_popup()
-		os.system("adb backup -all -f \"" + Path + "\"")
+		os.system("./adb backup -all -f \"" + Path + "\"")
 		
 	def backup_apps(self):
 		self.password_popup()
 		self.progress_popup()
-		os.system("adb backup -apk -noshared -nosystem -f \"" + Path + "\"")
+		os.system("./adb backup -apk -noshared -nosystem -f \"" + Path + "\"")
 		
 	def backup_storage(self):
 		self.password_popup()
 		self.progress_popup()
-		os.system("adb backup -noapk -shared -nosystem -f \"" + Path + "\"")
+		os.system("./adb backup -noapk -shared -nosystem -f \"" + Path + "\"")
 		
 	def backup_single_app(self):
 		os.system("singleappbackup.bat")
@@ -97,13 +103,13 @@ class Window(QtGui.QWidget):
 		
 		self.password_popup()
 		self.progress_popup()
-		os.system("adb backup " + PackageToBackup + " \"" + Path + "\"")
+		os.system("./adb backup " + PackageToBackup + " \"" + Path + "\"")
 		
 	def restore(self):
 		backup_location = QtGui.QFileDialog.getOpenFileName(self, 'Open backup file', os.getcwd())
 		self.password_popup()
 		self.progress_popup()
-		os.system("adb restore " + str(backup_location))
+		os.system("./adb restore " + str(backup_location))
 		
 	def openBrowseWindow(self):
 		# print "Browse window placeholder"
@@ -116,6 +122,11 @@ class Window(QtGui.QWidget):
 		self.location_path.setText(directory)
 		
 	def initUI(self):
+		if os.getuid() == 0:
+		    pass
+		else:
+		    self.root_popup()		
+
 		self.resize(300, 500)
 		self.center()
 		self.setFixedSize(300, 500)
@@ -126,7 +137,7 @@ class Window(QtGui.QWidget):
 		self.header.setPixmap(QtGui.QPixmap('header.png'))
 		self.header.setGeometry(0, 0, 300, 70)
 		self.show()
-		
+	
 		warning1 = QtGui.QLabel(self)
 		warning1.setGeometry(10, 70, 300, 14)
 		warning1.setText("<font color='red'>Backups only work on devices running 4.0+.<font>")
@@ -204,10 +215,7 @@ class Window(QtGui.QWidget):
 		location_footer = QtGui.QLabel(self)
 		location_footer.setGeometry(80, 370, 300, 14)
 		location_footer.setText("(You can change this.)")
-		location_footer.show()
-		
-		
-		
+		location_footer.show()		
 		
 	def center(self):
 		qr = self.frameGeometry()
@@ -216,6 +224,8 @@ class Window(QtGui.QWidget):
 		self.move(qr.topLeft())
 		
 def main():
+	
+
 	app = QtGui.QApplication(sys.argv)
 	w = Window()
 	sys.exit(app.exec_())
