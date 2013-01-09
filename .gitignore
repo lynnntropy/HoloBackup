@@ -19,6 +19,8 @@ develop-eggs
 .installed.cfg
 lib
 lib64
+*.exe
+SAB_Linux
 
 # Installer logs
 pip-log.txt
