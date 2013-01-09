@@ -46,7 +46,16 @@ class Window(QtGui.QWidget):
 	def showDialog(self):
 		text, ok = QtGui.QInputDialog.getText(self, 'Backup single app', "You should be seeing a list of installed packages in the second window. Enter which one you want to backup.")
 		if ok:
-			PackageToBackup = (str(text))
+			self.PackageToBackup = str(text)
+
+	def showDisclaimer(self):
+		popup_msg = "ADB Backup is an undocumented, hacky and untested part of the Android SDK. There are various phones and tablets it simply does not work on, and even then it's very likely that at least some part of it will cause an error or simply produce an empty backup file. Some functions also may require superuser permissions on your device.\n\nAs a result of this, I strongly recommend that you check if the application actually works for you before relying on it as your only backup solution."
+		reply = QtGui.QMessageBox.question(self, 'Disclaimer', popup_msg, QtGui.QMessageBox.Ok, QtGui.QMessageBox.Cancel)
+		
+		if reply == QtGui.QMessageBox.Ok:
+			pass
+		else:
+			exit(0)
 	
 	def password_popup(self):
 		popup_msg = "This program only works properly if you've set a 'Desktop backup password' in Developer Options. Have you done that?"
@@ -90,7 +99,7 @@ class Window(QtGui.QWidget):
 		os.system("./adb backup -noapk -shared -nosystem -f \"" + Path + "\"")
 		
 	def backup_single_app(self):
-		os.system("singleappbackup.bat")
+		os.system("./adb shell pm list packages")
 		#print "Single app placeholder"
 		
 		#app2 = QtGui.QApplication(sys.argv)
@@ -99,11 +108,14 @@ class Window(QtGui.QWidget):
 		
 		#self.handleNewWindow()
 		
+		self.PackageToBackup = ""
+
 		self.showDialog()
 		
 		self.password_popup()
 		self.progress_popup()
-		os.system("./adb backup " + PackageToBackup + " \"" + Path + "\"")
+		print "running: " + "./adb backup " + self.PackageToBackup + " -f " + "\"" + Path + "\""
+		os.system("./adb backup " + self.PackageToBackup + " -f " + "\"" + Path + "\"")
 		
 	def restore(self):
 		backup_location = QtGui.QFileDialog.getOpenFileName(self, 'Open backup file', os.getcwd())
@@ -125,7 +137,9 @@ class Window(QtGui.QWidget):
 		if os.getuid() == 0:
 		    pass
 		else:
-		    self.root_popup()		
+		    self.root_popup()	
+
+		self.showDisclaimer()	
 
 		self.resize(300, 500)
 		self.center()
@@ -137,6 +151,16 @@ class Window(QtGui.QWidget):
 		self.header.setPixmap(QtGui.QPixmap('header.png'))
 		self.header.setGeometry(0, 0, 300, 70)
 		self.show()
+
+		self.arrow_left = QtGui.QLabel(self)
+		self.arrow_left.setPixmap(QtGui.QPixmap('arrow_left.png'))
+		self.arrow_left.setGeometry(277, 127, 20, 20)
+		self.arrow_left.show()
+
+		self.arrow_right = QtGui.QLabel(self)
+		self.arrow_right.setPixmap(QtGui.QPixmap('arrow_right.png'))
+		self.arrow_right.setGeometry(3, 127, 20, 20)
+		self.arrow_right.show()
 	
 		warning1 = QtGui.QLabel(self)
 		warning1.setGeometry(10, 70, 300, 14)

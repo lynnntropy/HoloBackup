@@ -42,12 +42,20 @@ class Window(QtGui.QWidget):
 		window.list.resize(100, 100)
 		window.list.move(1, 1)
 		window.list.show()
-	
+
 	def showDialog(self):
 		text, ok = QtGui.QInputDialog.getText(self, 'Backup single app', "You should be seeing a list of installed packages in the second window. Enter which one you want to backup.")
-		if ok:
-			PackageToBackup = (str(text))
+		PackageToBackup = (str(text))
 	
+	def showDisclaimer(self):
+		popup_msg = "ADB Backup is an undocumented, hacky and untested part of the Android SDK. There are various phones and tablets it simply does not work on, and even then it's very likely that at least some part of it will cause an error or simply produce an empty backup file. Some functions also may require superuser permissions on your device.\n\nAs a result of this, I strongly recommend that you check if the application actually works for you before relying on it as your only backup solution."
+		reply = QtGui.QMessageBox.question(self, 'Disclaimer', popup_msg, QtGui.QMessageBox.Ok, QtGui.QMessageBox.Cancel)
+		
+		if reply == QtGui.QMessageBox.Ok:
+			pass
+		else:
+			exit(0)
+
 	def password_popup(self):
 		popup_msg = "This program only works properly if you've set a 'Desktop backup password' in Developer Options. Have you done that?"
 		reply = QtGui.QMessageBox.question(self, 'Warning!',
@@ -97,6 +105,8 @@ class Window(QtGui.QWidget):
 		
 		self.password_popup()
 		self.progress_popup()
+		print "PackageToBackup = " + PackageToBackup
+		print "Path = " + Path
 		os.system("adb backup " + PackageToBackup + " \"" + Path + "\"")
 		
 	def restore(self):
@@ -111,11 +121,14 @@ class Window(QtGui.QWidget):
 		#dialog.setFileMode(QtGui.QFileDialog.DirectoryOnly)
 		
 		directory = QtGui.QFileDialog.getExistingDirectory(self, 'Select backup directory')
+		win_directory = QtCore.QDir.toNativeSeparators(directory)
 		
-		Path = directory + "\\backup.ab"
-		self.location_path.setText(directory)
+		Path = win_directory + "\\backup.ab"
+		self.location_path.setText(win_directory)
 		
 	def initUI(self):
+		self.showDisclaimer()
+
 		self.resize(300, 500)
 		self.center()
 		self.setFixedSize(300, 500)
@@ -127,6 +140,16 @@ class Window(QtGui.QWidget):
 		self.header.setGeometry(0, 0, 300, 70)
 		self.show()
 		
+		self.arrow_left = QtGui.QLabel(self)
+		self.arrow_left.setPixmap(QtGui.QPixmap('arrow_left.png'))
+		self.arrow_left.setGeometry(257, 127, 20, 20)
+		self.arrow_left.show()
+
+		self.arrow_right = QtGui.QLabel(self)
+		self.arrow_right.setPixmap(QtGui.QPixmap('arrow_right.png'))
+		self.arrow_right.setGeometry(23, 127, 20, 20)
+		self.arrow_right.show()
+
 		warning1 = QtGui.QLabel(self)
 		warning1.setGeometry(45, 70, 300, 14)
 		warning1.setText("<font color='red'>Backups only work on devices running 4.0+.<font>")
