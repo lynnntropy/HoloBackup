@@ -33,7 +33,10 @@ class Window(QtGui.QWidget):
 	def password_popup(self):
 		popup_msg = "This program only works properly if you've set a 'Desktop backup password' in Developer Options. Have you done that?"
 		reply = QtGui.QMessageBox.question(self, 'Warning!',
-			popup_msg, QtGui.QMessageBox.Yes)
+			popup_msg, QtGui.QMessageBox.Yes, QtGui.QMessageBox.No)
+
+		if reply == QtGui.QMessageBox.No:
+			sys.exit(0)
 			
 	def progress_popup(self):
 		popup_msg = "Ready to start the operation. You'll need to monitor the rest of the process on your device. Be careful not to close the main window until it's done!"
