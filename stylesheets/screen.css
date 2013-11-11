@@ -424,9 +424,9 @@ blockquote {
 }
 
 img {
-  -webkit-box-shadow: 0px 2px 0px #bdb6ad;
+  /* -webkit-box-shadow: 0px 2px 0px #bdb6ad;
   -moz-box-shadow: 0px 2px 0px #bdb6ad;
-  box-shadow: 0px 2px 0px #bdb6ad;
+  box-shadow: 0px 2px 0px #bdb6ad; */
   border: 2px solid #fff6e9;
   max-width: 502px;
 }
