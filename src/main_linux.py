@@ -134,45 +134,45 @@ class Window(QtGui.QWidget):
         self.progress_popup()
 
         if not self.use_system_adb_binary:
-            os.system("gksudo \"./adb backup -apk -shared -all -nosystem -f \"" + Path + "\"\"")
+            os.system('gksudo "./adb backup -apk -shared -all -nosystem -f "' + Path + '""')
         else:
-            os.system("adb backup -apk -shared -all -nosystem -f \"" + Path + "\"")
+            os.system('adb backup -apk -shared -all -nosystem -f "' + Path + '"')
 
     def backup_all_with_system(self, event):
         self.password_popup()
         self.progress_popup()
 
         if not self.use_system_adb_binary:
-            os.system("gksudo \"./adb backup -apk -shared -all -system -f \"" + Path + "\"\"")
+            os.system('gksudo "./adb backup -apk -shared -all -system -f "' + Path + '""')
         else:
-            os.system("adb backup -apk -shared -all -system -f \"" + Path + "\"")
+            os.system('adb backup -apk -shared -all -system -f "' + Path + '"')
 
     def backup_app_data_and_device_data(self, event):
         self.password_popup()
         self.progress_popup()
 
         if not self.use_system_adb_binary:
-            os.system("gksudo \"./adb backup -all -f \"" + Path + "\"\"")
+            os.system('gksudo "./adb backup -all -f "' + Path + '""')
         else:
-            os.system("adb backup -all -f \"" + Path + "\"")
+            os.system('adb backup -all -f "' + Path + '"')
 
     def backup_apps(self, event):
         self.password_popup()
         self.progress_popup()
 
         if not self.use_system_adb_binary:
-            os.system("gksudo \"./adb backup -apk -noshared -nosystem -f \"" + Path + "\"\"")
+            os.system('gksudo "./adb backup -apk -noshared -nosystem -f "' + Path + '""')
         else:
-            os.system("adb backup -apk -noshared -nosystem -f \"" + Path + "\"")
+            os.system('adb backup -apk -noshared -nosystem -f "' + Path + '"')
 
     def backup_storage(self, event):
         self.password_popup()
         self.progress_popup()
 
         if not self.use_system_adb_binary:
-            os.system("gksudo \"./adb backup -noapk -shared -nosystem -f \"" + Path + "\"\"")
+            os.system('gksudo "./adb backup -noapk -shared -nosystem -f "' + Path + '""')
         else:
-            os.system("adb backup -noapk -shared -nosystem -f \"" + Path + "\"")
+            os.system('adb backup -noapk -shared -nosystem -f "' + Path + '"')
 
     def get_backup_location(self, event):
         backup_location = QtGui.QFileDialog.getOpenFileName(self, 'Open backup file', os.getcwd())
@@ -180,15 +180,15 @@ class Window(QtGui.QWidget):
         self.progress_popup()
 
         if not self.use_system_adb_binary:
-            os.system("gksudo \"./adb restore " + str(backup_location) + "\"")
+            os.system('gksudo "./adb restore ' + str(backup_location) + '"')
         else:
             os.system("adb restore " + str(backup_location))
 
     def install_sms_app(self, event):
         self.sms_popup()
         if not self.use_system_adb_binary:
-            os.system("gksudo \"./adb install smsBackupPlus/sms_backup_plus.apk\"")
-            os.system("gksudo \"./adb shell am start -n com.zegoggles.smssync/com.zegoggles.smssync.SmsSync\"")
+            os.system('gksudo "./adb install smsBackupPlus/sms_backup_plus.apk"')
+            os.system('gksudo "./adb shell am start -n com.zegoggles.smssync/com.zegoggles.smssync.SmsSync"')
         else:
             os.system("adb install smsBackupPlus/sms_backup_plus.apk")
             os.system("adb shell am start -n com.zegoggles.smssync/com.zegoggles.smssync.SmsSync")
