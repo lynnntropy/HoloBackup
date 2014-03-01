@@ -206,7 +206,8 @@ class Window(QtGui.QWidget):
             self.useSystemAdbBinary = False
             self.system_adb.setPixmap(QtGui.QPixmap('img/adb_unchecked.png'))
 
-    def donate_btc(self, event):
+    @staticmethod
+    def donate_btc(event):
         webbrowser.open('donate.html')
 
     def connect_wireless_adb(self, event):
