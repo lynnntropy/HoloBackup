@@ -9,6 +9,7 @@ Path = os.getcwd() + "/Backups/" + "backup.ab"
 class Window(QtGui.QWidget):
     def __init__(self):
         super(Window, self).__init__()
+        self.package_to_backup = ''
         self.init_ui()
 
     def center(self):
@@ -22,7 +23,7 @@ class Window(QtGui.QWidget):
                                               "You should be seeing a list of installed packages in the second window. "
                                               "Enter which one you want to backup.")
         if ok:
-            self.PackageToBackup = str(text)
+            self.package_to_backup = str(text)
 
     def show_disclaimer(self):
         popup_msg = "ADB Backup is an undocumented, hacky and untested part of the Android SDK. " \
