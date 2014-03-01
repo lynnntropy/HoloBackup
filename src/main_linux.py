@@ -9,14 +9,16 @@ Path = os.getcwd() + "/Backups/" + "backup.ab"
 
 
 class Window(QtGui.QWidget):
-    SU_COMMAND = Window.get_su_gui_command()
+    SU_COMMAND = ''
 
     def __init__(self):
         super(Window, self).__init__()
 
-        self.package_to_backup, self.use_system_adb_binary, self.background, self.btn1, self.btn2, self.btn3, \
-            self.btn4, self.btn5, self.restore, self.sms, self.browse, self.path_label, self.wireless_adb, self.btc, \
-            self.system_adb = None
+        Window.su_command = Window.get_su_gui_command()
+
+        self.package_to_backup = self.use_system_adb_binary = self.background = self.btn1 = self.btn2 = self.btn3 = \
+            self.btn4 = self.btn5 = self.restore = self.sms = self.browse = self.path_label = self.wireless_adb = \
+            self.btc = self.system_adb = None
 
         self.init_ui()
 
