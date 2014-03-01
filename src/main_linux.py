@@ -61,7 +61,7 @@ class Window(QtGui.QWidget):
     def sms_popup(self):
         popup_msg = "SMS Backup+, a great open-source application by Jan Berkel, will now be installed and " \
                     "launched on your device.\n\nYou can use this to back up and restore your SMS messages and " \
-                    "call log entries using a custom label in your Gmail."
+                    "call log entries using a custom label in your GMail."
         reply = QtGui.QMessageBox.question(self, 'SMS Backup / Restore',
                                            popup_msg, QtGui.QMessageBox.Ok)
 
@@ -129,7 +129,7 @@ class Window(QtGui.QWidget):
         self.password_popup()
         self.progress_popup()
 
-        if self.useSystemAdbBinary == False:
+        if not self.useSystemAdbBinary:
             os.system("gksudo \"./adb backup -apk -shared -all -nosystem -f \"" + Path + "\"\"")
         else:
             os.system("adb backup -apk -shared -all -nosystem -f \"" + Path + "\"")
@@ -138,7 +138,7 @@ class Window(QtGui.QWidget):
         self.password_popup()
         self.progress_popup()
 
-        if self.useSystemAdbBinary == False:
+        if not self.useSystemAdbBinary:
             os.system("gksudo \"./adb backup -apk -shared -all -system -f \"" + Path + "\"\"")
         else:
             os.system("adb backup -apk -shared -all -system -f \"" + Path + "\"")
@@ -147,7 +147,7 @@ class Window(QtGui.QWidget):
         self.password_popup()
         self.progress_popup()
 
-        if self.useSystemAdbBinary == False:
+        if not self.useSystemAdbBinary:
             os.system("gksudo \"./adb backup -all -f \"" + Path + "\"\"")
         else:
             os.system("adb backup -all -f \"" + Path + "\"")
@@ -156,7 +156,7 @@ class Window(QtGui.QWidget):
         self.password_popup()
         self.progress_popup()
 
-        if self.useSystemAdbBinary == False:
+        if not self.useSystemAdbBinary:
             os.system("gksudo \"./adb backup -apk -noshared -nosystem -f \"" + Path + "\"\"")
         else:
             os.system("adb backup -apk -noshared -nosystem -f \"" + Path + "\"")
@@ -165,7 +165,7 @@ class Window(QtGui.QWidget):
         self.password_popup()
         self.progress_popup()
 
-        if self.useSystemAdbBinary == False:
+        if not self.useSystemAdbBinary:
             os.system("gksudo \"./adb backup -noapk -shared -nosystem -f \"" + Path + "\"\"")
         else:
             os.system("adb backup -noapk -shared -nosystem -f \"" + Path + "\"")
@@ -175,14 +175,14 @@ class Window(QtGui.QWidget):
         self.password_popup()
         self.progress_popup()
 
-        if self.useSystemAdbBinary == False:
+        if not self.useSystemAdbBinary:
             os.system("gksudo \"./adb restore " + str(backup_location) + "\"")
         else:
             os.system("adb restore " + str(backup_location))
 
     def install_sms_app(self, event):
         self.sms_popup()
-        if self.useSystemAdbBinary == False:
+        if not self.useSystemAdbBinary:
             os.system("gksudo \"./adb install smsBackupPlus/sms_backup_plus.apk\"")
             os.system("gksudo \"./adb shell am start -n com.zegoggles.smssync/com.zegoggles.smssync.SmsSync\"")
         else:
@@ -200,7 +200,7 @@ class Window(QtGui.QWidget):
         self.pathLabel.setText(directory)
 
     def adb_binary_change(self, event):
-        if self.useSystemAdbBinary == False:
+        if not self.useSystemAdbBinary:
             self.useSystemAdbBinary = True
             self.system_adb.setPixmap(QtGui.QPixmap('img/adb_checked.png'))
         else:
