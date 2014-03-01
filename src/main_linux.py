@@ -9,7 +9,11 @@ Path = os.getcwd() + "/Backups/" + "backup.ab"
 class Window(QtGui.QWidget):
     def __init__(self):
         super(Window, self).__init__()
-        self.package_to_backup = ''
+
+        self.package_to_backup, self.use_system_adb_binary, self.background, self.btn1, self.btn2, self.btn3, \
+            self.btn4, self.btn5, self.restore, self.sms, self.browse, self.path_label, self.wireless_adb, self.btc, \
+            self.system_adb = None
+
         self.init_ui()
 
     def center(self):
@@ -120,16 +124,16 @@ class Window(QtGui.QWidget):
         self.btc.setPixmap(QtGui.QPixmap('img/btc_up.png'))
 
     def wireless_adb_enter(self, event):
-        self.wirelessAdb.setPixmap(QtGui.QPixmap('img/wirelessAdb_down.png'))
+        self.wireless_adb.setPixmap(QtGui.QPixmap('img/wirelessAdb_down.png'))
 
     def wireless_adb_leave(self, event):
-        self.wirelessAdb.setPixmap(QtGui.QPixmap('img/wirelessAdb_up.png'))
+        self.wireless_adb.setPixmap(QtGui.QPixmap('img/wirelessAdb_up.png'))
 
     def backup_all_without_system(self, event):
         self.password_popup()
         self.progress_popup()
 
-        if not self.useSystemAdbBinary:
+        if not self.use_system_adb_binary:
             os.system("gksudo \"./adb backup -apk -shared -all -nosystem -f \"" + Path + "\"\"")
         else:
             os.system("adb backup -apk -shared -all -nosystem -f \"" + Path + "\"")
@@ -138,7 +142,7 @@ class Window(QtGui.QWidget):
         self.password_popup()
         self.progress_popup()
 
-        if not self.useSystemAdbBinary:
+        if not self.use_system_adb_binary:
             os.system("gksudo \"./adb backup -apk -shared -all -system -f \"" + Path + "\"\"")
         else:
             os.system("adb backup -apk -shared -all -system -f \"" + Path + "\"")
@@ -147,7 +151,7 @@ class Window(QtGui.QWidget):
         self.password_popup()
         self.progress_popup()
 
-        if not self.useSystemAdbBinary:
+        if not self.use_system_adb_binary:
             os.system("gksudo \"./adb backup -all -f \"" + Path + "\"\"")
         else:
             os.system("adb backup -all -f \"" + Path + "\"")
@@ -156,7 +160,7 @@ class Window(QtGui.QWidget):
         self.password_popup()
         self.progress_popup()
 
-        if not self.useSystemAdbBinary:
+        if not self.use_system_adb_binary:
             os.system("gksudo \"./adb backup -apk -noshared -nosystem -f \"" + Path + "\"\"")
         else:
             os.system("adb backup -apk -noshared -nosystem -f \"" + Path + "\"")
@@ -165,7 +169,7 @@ class Window(QtGui.QWidget):
         self.password_popup()
         self.progress_popup()
 
-        if not self.useSystemAdbBinary:
+        if not self.use_system_adb_binary:
             os.system("gksudo \"./adb backup -noapk -shared -nosystem -f \"" + Path + "\"\"")
         else:
             os.system("adb backup -noapk -shared -nosystem -f \"" + Path + "\"")
@@ -175,14 +179,14 @@ class Window(QtGui.QWidget):
         self.password_popup()
         self.progress_popup()
 
-        if not self.useSystemAdbBinary:
+        if not self.use_system_adb_binary:
             os.system("gksudo \"./adb restore " + str(backup_location) + "\"")
         else:
             os.system("adb restore " + str(backup_location))
 
     def install_sms_app(self, event):
         self.sms_popup()
-        if not self.useSystemAdbBinary:
+        if not self.use_system_adb_binary:
             os.system("gksudo \"./adb install smsBackupPlus/sms_backup_plus.apk\"")
             os.system("gksudo \"./adb shell am start -n com.zegoggles.smssync/com.zegoggles.smssync.SmsSync\"")
         else:
@@ -197,14 +201,14 @@ class Window(QtGui.QWidget):
         directory = QtGui.QFileDialog.getExistingDirectory(self, 'Select backup directory')
 
         Path = directory + "/backup.ab"
-        self.pathLabel.setText(directory)
+        self.path_label.setText(directory)
 
     def adb_binary_change(self, event):
-        if not self.useSystemAdbBinary:
-            self.useSystemAdbBinary = True
+        if not self.use_system_adb_binary:
+            self.use_system_adb_binary = True
             self.system_adb.setPixmap(QtGui.QPixmap('img/adb_checked.png'))
         else:
-            self.useSystemAdbBinary = False
+            self.use_system_adb_binary = False
             self.system_adb.setPixmap(QtGui.QPixmap('img/adb_unchecked.png'))
 
     @staticmethod
@@ -223,7 +227,7 @@ class Window(QtGui.QWidget):
 
         # backup_location = QtGui.QFileDialog.getOpenFileName(self, 'Open backup file', os.getcwd())
 
-        self.useSystemAdbBinary = False
+        self.use_system_adb_binary = False
 
         self.resize(300, 500)
         self.center()
@@ -292,16 +296,16 @@ class Window(QtGui.QWidget):
         self.browse.leaveEvent = self.browse_leave
         self.browse.mouseReleaseEvent = self.open_browse_window
 
-        self.pathLabel = QtGui.QLabel(self)
-        self.pathLabel.setGeometry(22, 381, 189, 14)
-        self.pathLabel.setText(os.getcwd() + '/Backups/')
+        self.path_label = QtGui.QLabel(self)
+        self.path_label.setGeometry(22, 381, 189, 14)
+        self.path_label.setText(os.getcwd() + '/Backups/')
 
-        self.wirelessAdb = QtGui.QLabel(self)
-        self.wirelessAdb.setPixmap(QtGui.QPixmap('img/wirelessAdb_up.png'))
-        self.wirelessAdb.setGeometry(34, 407, 235, 26)
-        self.wirelessAdb.enterEvent = self.wireless_adb_enter
-        self.wirelessAdb.leaveEvent = self.wireless_adb_leave
-        self.wirelessAdb.mouseReleaseEvent = self.connect_wireless_adb
+        self.wireless_adb = QtGui.QLabel(self)
+        self.wireless_adb.setPixmap(QtGui.QPixmap('img/wirelessAdb_up.png'))
+        self.wireless_adb.setGeometry(34, 407, 235, 26)
+        self.wireless_adb.enterEvent = self.wireless_adb_enter
+        self.wireless_adb.leaveEvent = self.wireless_adb_leave
+        self.wireless_adb.mouseReleaseEvent = self.connect_wireless_adb
 
         self.btc = QtGui.QLabel(self)
         self.btc.setPixmap(QtGui.QPixmap('img/btc_up.png'))
