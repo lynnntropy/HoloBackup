@@ -7,9 +7,35 @@ from PyQt4 import QtGui, QtCore
 
 Path = os.getcwd() + "/Backups/" + "backup.ab"
 
+"""
+Help text for adb backup extracted from adb help:
+
+adb backup [-f <file>] [-apk|-noapk] [-obb|-noobb] [-shared|-noshared] [-all] [-system|-nosystem] [<packages...>]
+- write an archive of the device's data to <file>.
+
+If no -f option is supplied then the data is written to "backup.ab" in the current directory.
+
+(-apk|-noapk enable/disable backup of the .apks themselves in the archive; the default is noapk.)
+
+(-obb|-noobb enable/disable backup of any installed apk expansion (aka .obb) files associated with each application;
+    the default is noobb.)
+
+(-shared|-noshared enable/disable backup of the device's shared storage / SD card contents; the default is noshared.)
+
+(-all means to back up all installed applications)
+
+(-system|-nosystem toggles whether -all automatically includes system applications;
+    the default is to include system apps)
+
+(<packages...> is the list of applications to be backed up.
+    If the -all or -shared flags are passed, then the package list is optional.
+    Applications explicitly given on the command line will be included even if -nosystem would ordinarily cause them to
+    be omitted.)
+"""
+
 
 class Window(QtGui.QWidget):
-    SU_COMMAND = ''
+    su_command = ''
 
     def __init__(self):
         super(Window, self).__init__()
@@ -140,7 +166,7 @@ class Window(QtGui.QWidget):
         self.progress_popup()
 
         if not self.use_system_adb_binary:
-            os.system(Window.SU_COMMAND + ' "./adb backup -apk -shared -all -nosystem -f "' + Path + '""')
+            os.system(Window.su_command + ' "./adb backup -apk -shared -all -nosystem -f "' + Path + '""')
         else:
             os.system('adb backup -apk -shared -all -nosystem -f "' + Path + '"')
 
@@ -149,7 +175,7 @@ class Window(QtGui.QWidget):
         self.progress_popup()
 
         if not self.use_system_adb_binary:
-            os.system(Window.SU_COMMAND + ' "./adb backup -apk -shared -all -system -f "' + Path + '""')
+            os.system(Window.su_command + ' "./adb backup -apk -shared -all -system -f "' + Path + '""')
         else:
             os.system('adb backup -apk -shared -all -system -f "' + Path + '"')
 
@@ -158,7 +184,7 @@ class Window(QtGui.QWidget):
         self.progress_popup()
 
         if not self.use_system_adb_binary:
-            os.system(Window.SU_COMMAND + ' "./adb backup -all -f "' + Path + '""')
+            os.system(Window.su_command + ' "./adb backup -all -f "' + Path + '""')
         else:
             os.system('adb backup -all -f "' + Path + '"')
 
@@ -167,7 +193,7 @@ class Window(QtGui.QWidget):
         self.progress_popup()
 
         if not self.use_system_adb_binary:
-            os.system(Window.SU_COMMAND + ' "./adb backup -apk -noshared -nosystem -f "' + Path + '""')
+            os.system(Window.su_command + ' "./adb backup -apk -noshared -nosystem -f "' + Path + '""')
         else:
             os.system('adb backup -apk -noshared -nosystem -f "' + Path + '"')
 
@@ -176,7 +202,7 @@ class Window(QtGui.QWidget):
         self.progress_popup()
 
         if not self.use_system_adb_binary:
-            os.system(Window.SU_COMMAND + ' "./adb backup -noapk -shared -nosystem -f "' + Path + '""')
+            os.system(Window.su_command + ' "./adb backup -noapk -shared -nosystem -f "' + Path + '""')
         else:
             os.system('adb backup -noapk -shared -nosystem -f "' + Path + '"')
 
@@ -186,15 +212,15 @@ class Window(QtGui.QWidget):
         self.progress_popup()
 
         if not self.use_system_adb_binary:
-            os.system(Window.SU_COMMAND + ' "./adb restore ' + str(backup_location) + '"')
+            os.system(Window.su_command + ' "./adb restore ' + str(backup_location) + '"')
         else:
             os.system("adb restore " + str(backup_location))
 
     def install_sms_app(self, event):
         self.sms_popup()
         if not self.use_system_adb_binary:
-            os.system(Window.SU_COMMAND + ' "./adb install smsBackupPlus/sms_backup_plus.apk"')
-            os.system(Window.SU_COMMAND + ' "./adb shell am start -n '
+            os.system(Window.su_command + ' "./adb install smsBackupPlus/sms_backup_plus.apk"')
+            os.system(Window.su_command + ' "./adb shell am start -n '
                                           'com.zegoggles.smssync/com.zegoggles.smssync.SmsSync"')
         else:
             os.system("adb install smsBackupPlus/sms_backup_plus.apk")
@@ -220,7 +246,7 @@ class Window(QtGui.QWidget):
 
     @staticmethod
     def donate_btc(event):
-        webbrowser.open('donate.html')
+        webbrowser.open(os.getcwd() + os.sep + 'donate.html')
 
     def connect_wireless_adb(self, event):
         text, ok = QtGui.QInputDialog.getText(self, 'Connect to Wireless ADB',
@@ -236,7 +262,7 @@ class Window(QtGui.QWidget):
         That is: kdesu for KDE, gksudo for GNOME, XFCE, etc
         """
         if 'KDE_FULL_SESSION' in os.environ and os.environ['KDE_FULL_SESSION']:
-            return 'kdesu'
+            return '$(kde4-config --path libexec)kdesu -c'
         else:
             return 'gksudo'
 
