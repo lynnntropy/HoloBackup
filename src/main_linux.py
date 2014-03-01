@@ -193,7 +193,7 @@ class Window(QtGui.QWidget):
         self.progress_popup()
 
         if not self.use_system_adb_binary:
-            os.system(Window.su_command + ' "./adb backup -apk -noshared -nosystem -f "' + Path + '""')
+            os.system(Window.su_command + ' "./adb backup -apk -all -noshared -nosystem -f "' + Path + '""')
         else:
             os.system('adb backup -apk -noshared -nosystem -f "' + Path + '"')
 
