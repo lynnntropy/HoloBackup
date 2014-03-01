@@ -9,7 +9,7 @@ Path = os.getcwd() + "/Backups/" + "backup.ab"
 class Window(QtGui.QWidget):
     def __init__(self):
         super(Window, self).__init__()
-        self.initUI()
+        self.init_ui()
 
     def center(self):
         qr = self.frameGeometry()
@@ -17,14 +17,14 @@ class Window(QtGui.QWidget):
         qr.moveCenter(cp)
         self.move(qr.topLeft())
 
-    def showDialog(self):
+    def show_dialog(self):
         text, ok = QtGui.QInputDialog.getText(self, 'Backup single app',
                                               "You should be seeing a list of installed packages in the second window. "
                                               "Enter which one you want to backup.")
         if ok:
             self.PackageToBackup = str(text)
 
-    def showDisclaimer(self):
+    def show_disclaimer(self):
         popup_msg = "ADB Backup is an undocumented, hacky and untested part of the Android SDK. " \
                     "There are various phones and tablets it has trouble with, and on certain devices, " \
                     "it's fairly likely it'll produce an empty backup file for no reason. " \
@@ -118,10 +118,10 @@ class Window(QtGui.QWidget):
     def btc_leave(self, event):
         self.btc.setPixmap(QtGui.QPixmap('img/btc_up.png'))
 
-    def wirelessAdb_enter(self, event):
+    def wireless_adb_enter(self, event):
         self.wirelessAdb.setPixmap(QtGui.QPixmap('img/wirelessAdb_down.png'))
 
-    def wirelessAdb_leave(self, event):
+    def wireless_adb_leave(self, event):
         self.wirelessAdb.setPixmap(QtGui.QPixmap('img/wirelessAdb_up.png'))
 
     def backup_all_without_system(self, event):
@@ -169,7 +169,7 @@ class Window(QtGui.QWidget):
         else:
             os.system("adb backup -noapk -shared -nosystem -f \"" + Path + "\"")
 
-    def getBackupLocation(self, event):
+    def get_backup_location(self, event):
         backup_location = QtGui.QFileDialog.getOpenFileName(self, 'Open backup file', os.getcwd())
         self.password_popup()
         self.progress_popup()
@@ -179,8 +179,7 @@ class Window(QtGui.QWidget):
         else:
             os.system("adb restore " + str(backup_location))
 
-
-    def installSmsApp(self, event):
+    def install_sms_app(self, event):
         self.sms_popup()
         if self.useSystemAdbBinary == False:
             os.system("gksudo \"./adb install smsBackupPlus/sms_backup_plus.apk\"")
@@ -189,7 +188,7 @@ class Window(QtGui.QWidget):
             os.system("adb install smsBackupPlus/sms_backup_plus.apk")
             os.system("adb shell am start -n com.zegoggles.smssync/com.zegoggles.smssync.SmsSync")
 
-    def openBrowseWindow(self, event):
+    def open_browse_window(self, event):
         # print "Browse window placeholder"
         #dialog = QtGui.QFileDialog(self, 'Select: Shared Music Directory', os.getcwd())
         #dialog.setFileMode(QtGui.QFileDialog.DirectoryOnly)
@@ -199,7 +198,7 @@ class Window(QtGui.QWidget):
         Path = directory + "/backup.ab"
         self.pathLabel.setText(directory)
 
-    def adbBinaryChange(self, event):
+    def adb_binary_change(self, event):
         if self.useSystemAdbBinary == False:
             self.useSystemAdbBinary = True
             self.system_adb.setPixmap(QtGui.QPixmap('img/adb_checked.png'))
@@ -207,18 +206,18 @@ class Window(QtGui.QWidget):
             self.useSystemAdbBinary = False
             self.system_adb.setPixmap(QtGui.QPixmap('img/adb_unchecked.png'))
 
-    def donateBtc(self, event):
+    def donate_btc(self, event):
         webbrowser.open('donate.html')
 
-    def connectWirelessADB(self, event):
+    def connect_wireless_adb(self, event):
         text, ok = QtGui.QInputDialog.getText(self, 'Connect to Wireless ADB',
                                               "If your device is set up for wireless ADB, connect to it here. "
                                               "Just type the location of the device in 'host:port' format.")
         if ok:
             os.system("./adb connect " + str(text))
 
-    def initUI(self):
-        self.showDisclaimer()
+    def init_ui(self):
+        self.show_disclaimer()
 
         # backup_location = QtGui.QFileDialog.getOpenFileName(self, 'Open backup file', os.getcwd())
 
@@ -275,21 +274,21 @@ class Window(QtGui.QWidget):
         self.restore.setGeometry(34, 270, 235, 26)
         self.restore.enterEvent = self.restore_enter
         self.restore.leaveEvent = self.restore_leave
-        self.restore.mouseReleaseEvent = self.getBackupLocation
+        self.restore.mouseReleaseEvent = self.get_backup_location
 
         self.sms = QtGui.QLabel(self)
         self.sms.setPixmap(QtGui.QPixmap('img/sms_up.png'))
         self.sms.setGeometry(34, 315, 235, 26)
         self.sms.enterEvent = self.sms_enter
         self.sms.leaveEvent = self.sms_leave
-        self.sms.mouseReleaseEvent = self.installSmsApp
+        self.sms.mouseReleaseEvent = self.install_sms_app
 
         self.browse = QtGui.QLabel(self)
         self.browse.setPixmap(QtGui.QPixmap('img/browse_up.png'))
         self.browse.setGeometry(216, 372, 69, 26)
         self.browse.enterEvent = self.browse_enter
         self.browse.leaveEvent = self.browse_leave
-        self.browse.mouseReleaseEvent = self.openBrowseWindow
+        self.browse.mouseReleaseEvent = self.open_browse_window
 
         self.pathLabel = QtGui.QLabel(self)
         self.pathLabel.setGeometry(22, 381, 189, 14)
@@ -298,16 +297,16 @@ class Window(QtGui.QWidget):
         self.wirelessAdb = QtGui.QLabel(self)
         self.wirelessAdb.setPixmap(QtGui.QPixmap('img/wirelessAdb_up.png'))
         self.wirelessAdb.setGeometry(34, 407, 235, 26)
-        self.wirelessAdb.enterEvent = self.wirelessAdb_enter
-        self.wirelessAdb.leaveEvent = self.wirelessAdb_leave
-        self.wirelessAdb.mouseReleaseEvent = self.connectWirelessADB
+        self.wirelessAdb.enterEvent = self.wireless_adb_enter
+        self.wirelessAdb.leaveEvent = self.wireless_adb_leave
+        self.wirelessAdb.mouseReleaseEvent = self.connect_wireless_adb
 
         self.btc = QtGui.QLabel(self)
         self.btc.setPixmap(QtGui.QPixmap('img/btc_up.png'))
         self.btc.setGeometry(34, 474, 235, 26)
         self.btc.enterEvent = self.btc_enter
         self.btc.leaveEvent = self.btc_leave
-        self.btc.mouseReleaseEvent = self.donateBtc
+        self.btc.mouseReleaseEvent = self.donate_btc
         self.btc.show()
 
         self.system_adb = QtGui.QLabel(self)
@@ -315,7 +314,7 @@ class Window(QtGui.QWidget):
         self.system_adb.setGeometry(10, 450, 272, 29)
         # self.system_adb.enterEvent = self.browse_enter
         # self.system_adb.leaveEvent = self.browse_leave
-        self.system_adb.mouseReleaseEvent = self.adbBinaryChange
+        self.system_adb.mouseReleaseEvent = self.adb_binary_change
 
         self.show()
 
