@@ -322,12 +322,11 @@ class Window(QtGui.QWidget):
         # self.system_adb.leaveEvent = self.browse_leave
         self.system_adb.mouseReleaseEvent = self.adb_binary_change
 
-        self.show()
-
 
 def main():
     app = QtGui.QApplication(sys.argv)
     w = Window()
+    w.show()
     sys.exit(app.exec_())
 
 
