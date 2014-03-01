@@ -19,12 +19,18 @@ class Window(QtGui.QWidget):
 
     def showDialog(self):
         text, ok = QtGui.QInputDialog.getText(self, 'Backup single app',
-                                              "You should be seeing a list of installed packages in the second window. Enter which one you want to backup.")
+                                              "You should be seeing a list of installed packages in the second window. "
+                                              "Enter which one you want to backup.")
         if ok:
             self.PackageToBackup = str(text)
 
     def showDisclaimer(self):
-        popup_msg = "ADB Backup is an undocumented, hacky and untested part of the Android SDK. There are various phones and tablets it has trouble with, and on certain devices, it's fairly likely it'll produce an empty backup file for no reason. Some functions might not work properly without root access to your device.\n\nAs a result of this, I strongly recommend that you check if the application actually works for you before relying on it as your only backup solution."
+        popup_msg = "ADB Backup is an undocumented, hacky and untested part of the Android SDK. " \
+                    "There are various phones and tablets it has trouble with, and on certain devices, " \
+                    "it's fairly likely it'll produce an empty backup file for no reason. " \
+                    "Some functions might not work properly without root access to your device.\n\n" \
+                    "As a result of this, I strongly recommend that you check if the application actually works " \
+                    "for you before relying on it as your only backup solution."
         reply = QtGui.QMessageBox.question(self, 'Disclaimer', popup_msg, QtGui.QMessageBox.Ok,
                                            QtGui.QMessageBox.Cancel)
 
@@ -34,12 +40,14 @@ class Window(QtGui.QWidget):
             exit(0)
 
     def password_popup(self):
-        popup_msg = "This program only works properly if you've set a 'Desktop backup password' in Developer Options. Have you done that?"
+        popup_msg = "This program only works properly if you've set a 'Desktop backup password' in Developer Options." \
+                    " Have you done that?"
         reply = QtGui.QMessageBox.question(self, 'Warning!',
                                            popup_msg, QtGui.QMessageBox.Yes)
 
     def progress_popup(self):
-        popup_msg = "Ready to start the operation. You'll need to monitor the rest of the process on your device. Be careful not to close the main window until it's done!"
+        popup_msg = "Ready to start the operation. You'll need to monitor the rest of the process on your device. " \
+                    "Be careful not to close the main window until it's done!"
         reply = QtGui.QMessageBox.question(self, 'Ready!',
                                            popup_msg, QtGui.QMessageBox.Ok)
 
@@ -50,7 +58,9 @@ class Window(QtGui.QWidget):
         exit(0)
 
     def sms_popup(self):
-        popup_msg = "SMS Backup+, a great open-source application by Jan Berkel, will now be installed and launched on your device.\n\nYou can use this to back up and restore your SMS messages and call log entries using a custom label in your Gmail."
+        popup_msg = "SMS Backup+, a great open-source application by Jan Berkel, will now be installed and " \
+                    "launched on your device.\n\nYou can use this to back up and restore your SMS messages and " \
+                    "call log entries using a custom label in your Gmail."
         reply = QtGui.QMessageBox.question(self, 'SMS Backup / Restore',
                                            popup_msg, QtGui.QMessageBox.Ok)
 
@@ -202,7 +212,8 @@ class Window(QtGui.QWidget):
 
     def connectWirelessADB(self, event):
         text, ok = QtGui.QInputDialog.getText(self, 'Connect to Wireless ADB',
-                                              "If your device is set up for wireless ADB, connect to it here. Just type the location of the device in 'host:port' format.")
+                                              "If your device is set up for wireless ADB, connect to it here. "
+                                              "Just type the location of the device in 'host:port' format.")
         if ok:
             os.system("./adb connect " + str(text))
 
