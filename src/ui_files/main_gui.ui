@@ -1,0 +1,280 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>mainWindow</class>
+ <widget class="QDialog" name="mainWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>300</width>
+    <height>520</height>
+   </rect>
+  </property>
+  <property name="sizePolicy">
+   <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+    <horstretch>0</horstretch>
+    <verstretch>0</verstretch>
+   </sizepolicy>
+  </property>
+  <property name="minimumSize">
+   <size>
+    <width>300</width>
+    <height>520</height>
+   </size>
+  </property>
+  <property name="maximumSize">
+   <size>
+    <width>300</width>
+    <height>520</height>
+   </size>
+  </property>
+  <property name="windowTitle">
+   <string>Holo Backup v2.0</string>
+  </property>
+  <widget class="QLabel" name="label">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>0</y>
+     <width>151</width>
+     <height>41</height>
+    </rect>
+   </property>
+   <property name="frameShadow">
+    <enum>QFrame::Plain</enum>
+   </property>
+   <property name="text">
+    <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:18pt; color:#006a9f;&quot;&gt;Holo Backup&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_2">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>35</y>
+     <width>291</width>
+     <height>21</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Backups only work on devices running 4.0+</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_3">
+   <property name="geometry">
+    <rect>
+     <x>50</x>
+     <y>80</y>
+     <width>201</width>
+     <height>41</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;Backups can only be restored to the same device&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+   </property>
+   <property name="wordWrap">
+    <bool>true</bool>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_4">
+   <property name="geometry">
+    <rect>
+     <x>20</x>
+     <y>60</y>
+     <width>261</width>
+     <height>17</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Make sure USB Debugging is enabled!</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="bakAllNoSys">
+   <property name="geometry">
+    <rect>
+     <x>25</x>
+     <y>130</y>
+     <width>251</width>
+     <height>27</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Backup all without system apps</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="bakAll">
+   <property name="geometry">
+    <rect>
+     <x>25</x>
+     <y>165</y>
+     <width>251</width>
+     <height>27</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Backup all with system apps (unsafe)</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="bakAppDevData">
+   <property name="geometry">
+    <rect>
+     <x>25</x>
+     <y>200</y>
+     <width>251</width>
+     <height>27</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Backup app data and device data</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="bakStorSd">
+   <property name="geometry">
+    <rect>
+     <x>25</x>
+     <y>270</y>
+     <width>251</width>
+     <height>27</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Backup storage / SD card</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="bakApp">
+   <property name="geometry">
+    <rect>
+     <x>25</x>
+     <y>235</y>
+     <width>251</width>
+     <height>27</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Backup apps</string>
+   </property>
+  </widget>
+  <widget class="Line" name="line">
+   <property name="geometry">
+    <rect>
+     <x>25</x>
+     <y>305</y>
+     <width>251</width>
+     <height>5</height>
+    </rect>
+   </property>
+   <property name="orientation">
+    <enum>Qt::Horizontal</enum>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="restoreBtn">
+   <property name="geometry">
+    <rect>
+     <x>25</x>
+     <y>315</y>
+     <width>251</width>
+     <height>27</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Restore...</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="smsBakRestore">
+   <property name="geometry">
+    <rect>
+     <x>25</x>
+     <y>360</y>
+     <width>251</width>
+     <height>27</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>SMS Backup / Restore</string>
+   </property>
+  </widget>
+  <widget class="Line" name="line_2">
+   <property name="geometry">
+    <rect>
+     <x>25</x>
+     <y>350</y>
+     <width>251</width>
+     <height>5</height>
+    </rect>
+   </property>
+   <property name="orientation">
+    <enum>Qt::Horizontal</enum>
+   </property>
+  </widget>
+  <widget class="QLineEdit" name="bakLocation">
+   <property name="geometry">
+    <rect>
+     <x>25</x>
+     <y>395</y>
+     <width>151</width>
+     <height>27</height>
+    </rect>
+   </property>
+   <property name="placeholderText">
+    <string>Backup location</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="bakBrowseBtn">
+   <property name="geometry">
+    <rect>
+     <x>180</x>
+     <y>395</y>
+     <width>98</width>
+     <height>27</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Browse</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="donateLbl">
+   <property name="geometry">
+    <rect>
+     <x>30</x>
+     <y>492</y>
+     <width>241</width>
+     <height>17</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;donate.html&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;Feeling generous? Send me bitcoins!&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+   </property>
+   <property name="openExternalLinks">
+    <bool>true</bool>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="wirelessAdb">
+   <property name="geometry">
+    <rect>
+     <x>25</x>
+     <y>430</y>
+     <width>251</width>
+     <height>27</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Connect to wireless ADB</string>
+   </property>
+  </widget>
+  <widget class="QCheckBox" name="systemAdb">
+   <property name="geometry">
+    <rect>
+     <x>25</x>
+     <y>465</y>
+     <width>251</width>
+     <height>22</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Use system ADB binary? (No root)</string>
+   </property>
+  </widget>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>
